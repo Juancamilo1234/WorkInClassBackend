@@ -1,7 +1,7 @@
 package co.edu.events.rest.services;
 
-import co.consulta.de.procesos.jpa.entities.Evento;
-import co.consulta.de.procesos.jpa.sessions.EventoFacade;
+import co.edu.events.jpa.entities.Event;
+import co.edu.events.jpa.sessions.EventFacade;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ws.rs.Consumes;
@@ -17,37 +17,37 @@ import javax.ws.rs.core.MediaType;
  *
  * @author luisOlave
  */
-@Path("eventos")
+@Path("events")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public class EventoRest {
+public class EventRest {
     
        
     @EJB
-    private EventoFacade eventoEJB;
+    private EventFacade eventEJB;
     
     @GET
-    public List<Evento> findAll(){
+    public List<Event> findAll(){
     
-    return eventoEJB.findAll();   
+    return eventEJB.findAll();   
     }
     
     @GET
     @Path("{id}")
-    public Evento findById(@PathParam("id") Integer id){
+    public Event findById(@PathParam("id") Integer id){
          
-        return id.find(id);
+        return eventEJB.find(id);
      
     }
      
     @POST
-    public void create(Evento evento){
-        eventoEJB.create(evento);
+    public void create(Event event){
+        eventEJB.create(event);
     }
     
     @PUT
     @Path("{id}")
-    public void edit(@PathParam("id") String id, Evento evento){
-        eventoEJB.edit(equipment);
+    public void edit(@PathParam("id") String id, Event event){
+        eventEJB.edit(event);
     }
 }

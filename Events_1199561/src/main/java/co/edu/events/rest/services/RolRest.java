@@ -1,7 +1,7 @@
 package co.edu.events.rest.services;
 
-import co.consulta.de.procesos.jpa.entities.Rol;
-import co.consulta.de.procesos.jpa.sessions.RolFacade;
+import co.edu.events.jpa.entities.Rol;
+import co.edu.events.jpa.sessions.RolFacade;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ws.rs.Consumes;

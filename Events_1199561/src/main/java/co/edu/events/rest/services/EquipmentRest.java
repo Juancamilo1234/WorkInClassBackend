@@ -1,7 +1,8 @@
 package co.edu.events.rest.services;
 
-import co.consulta.de.procesos.jpa.entities.Equipment;
-import co.consulta.de.procesos.jpa.sessions.EquipmentFacade;
+
+import co.edu.events.jpa.entities.Equipment;
+import co.edu.events.jpa.sessions.EquipmentFacade;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ws.rs.Consumes;
@@ -29,12 +30,13 @@ public class EquipmentRest {
     @GET
     public List<Equipment> findAll(){
     
-    return Equipament.findAll();   
+    return equipmentEJB.findAll();   
     }
+    
     
     @GET
     @Path("{id}")
-    public Equipament findById(@PathParam("id") Integer id){
+    public Equipment findById(@PathParam("id") Integer id){
          
         return equipmentEJB.find(id);
      

@@ -1,7 +1,7 @@
 package co.edu.events.rest.services;
 
-import co.consulta.de.procesos.jpa.entities.TypeDocument;
-import co.consulta.de.procesos.jpa.sessions.TypeDocumentFacade;
+import co.edu.events.jpa.entities.TypeDocument;
+import co.edu.events.jpa.sessions.TypeDocumentFacade;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ws.rs.Consumes;
