@@ -15,7 +15,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -41,7 +40,7 @@ public class User implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
-    private Integer id;
+    private Integer idUser;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
@@ -72,16 +71,15 @@ public class User implements Serializable {
     @NotNull
     @Size(min = 1, max = 45)
     @Column(name = "email")
-    public String email;
-    @JoinTable(name = "Users _has_Roles", joinColumns = {
-        @JoinColumn(name = "id_Users", referencedColumnName = "id")}, inverseJoinColumns = {
-        @JoinColumn(name = "id_Roles", referencedColumnName = "id")})
-    @ManyToMany
+    private String email;
+    @ManyToMany(mappedBy = "userList")
     private List<Rol> rolList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUsers")
+    private List<Asistence> asistenceList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUser")
     private List<Equipment> equipmentList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-    private List<UsershasEvents> usershasEventsList;
+    private List<UsershasEvent> usershasEventList;
     @JoinColumn(name = "id_type_document", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private TypeDocument idTypeDocument;
@@ -90,11 +88,11 @@ public class User implements Serializable {
     }
 
     public User(Integer id) {
-        this.id = id;
+        this.idUser = id;
     }
 
-    public User(Integer id, String name, String lastname, String address, String numDocument, String password, String email) {
-        this.id = id;
+    public User(Integer idUser, String name, String lastname, String address, String numDocument, String password, String email) {
+        this.idUser = idUser;
         this.name = name;
         this.lastname = lastname;
         this.address = address;
@@ -104,11 +102,11 @@ public class User implements Serializable {
     }
 
     public Integer getId() {
-        return id;
+        return idUser;
     }
 
     public void setId(Integer id) {
-        this.id = id;
+        this.idUser = id;
     }
 
     public String getName() {
@@ -169,6 +167,15 @@ public class User implements Serializable {
     }
 
     @XmlTransient
+    public List<Asistence> getAsistenceList() {
+        return asistenceList;
+    }
+
+    public void setAsistenceList(List<Asistence> asistenceList) {
+        this.asistenceList = asistenceList;
+    }
+
+    @XmlTransient
     public List<Equipment> getEquipmentList() {
         return equipmentList;
     }
@@ -178,12 +185,12 @@ public class User implements Serializable {
     }
 
     @XmlTransient
-    public List<UsershasEvents> getUsershasEventsList() {
-        return usershasEventsList;
+    public List<UsershasEvent> getUsershasEventList() {
+        return usershasEventList;
     }
 
-    public void setUsershasEventsList(List<UsershasEvents> usershasEventsList) {
-        this.usershasEventsList = usershasEventsList;
+    public void setUsershasEventList(List<UsershasEvent> usershasEventList) {
+        this.usershasEventList = usershasEventList;
     }
 
     public TypeDocument getIdTypeDocument() {
@@ -194,29 +201,4 @@ public class User implements Serializable {
         this.idTypeDocument = idTypeDocument;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof User)) {
-            return false;
-        }
-        User other = (User) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "co.edu.events.jpa.entities.User[ id=" + id + " ]";
-    }
-    
 }

@@ -8,8 +8,10 @@ package co.edu.events.jpa.entities;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -25,11 +27,20 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @Table(name = "equipment")
+@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "Equipment.findAll", query = "SELECT e FROM Equipment e")
+    , @NamedQuery(name = "Equipment.findById", query = "SELECT e FROM Equipment e WHERE e.id = :id")
+    , @NamedQuery(name = "Equipment.findByDescription", query = "SELECT e FROM Equipment e WHERE e.description = :description")
+    , @NamedQuery(name = "Equipment.findByLocation", query = "SELECT e FROM Equipment e WHERE e.location = :location")})
 public class Equipment implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected EquipmentPK equipmentPK;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "id")
+    private Integer id;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 200)
@@ -39,33 +50,29 @@ public class Equipment implements Serializable {
     @NotNull
     @Column(name = "location")
     private int location;
-    @JoinColumn(name = "id_Users", referencedColumnName = "id", insertable = false, updatable = false)
+    @JoinColumn(name = "id_user", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private User user;
+    private User idUser;
 
     public Equipment() {
     }
 
-    public Equipment(EquipmentPK equipmentPK) {
-        this.equipmentPK = equipmentPK;
+    public Equipment(Integer id) {
+        this.id = id;
     }
 
-    public Equipment(EquipmentPK equipmentPK, String description, int location) {
-        this.equipmentPK = equipmentPK;
+    public Equipment(Integer id, String description, int location) {
+        this.id = id;
         this.description = description;
         this.location = location;
     }
 
-    public Equipment(int id, int idUsers) {
-        this.equipmentPK = new EquipmentPK(id, idUsers);
+    public Integer getId() {
+        return id;
     }
 
-    public EquipmentPK getEquipmentPK() {
-        return equipmentPK;
-    }
-
-    public void setEquipmentPK(EquipmentPK equipmentPK) {
-        this.equipmentPK = equipmentPK;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getDescription() {
@@ -84,18 +91,18 @@ public class Equipment implements Serializable {
         this.location = location;
     }
 
-    public User getUser() {
-        return user;
+    public User getIdUser() {
+        return idUser;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setIdUser(User idUser) {
+        this.idUser = idUser;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (equipmentPK != null ? equipmentPK.hashCode() : 0);
+        hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
 
@@ -106,7 +113,7 @@ public class Equipment implements Serializable {
             return false;
         }
         Equipment other = (Equipment) object;
-        if ((this.equipmentPK == null && other.equipmentPK != null) || (this.equipmentPK != null && !this.equipmentPK.equals(other.equipmentPK))) {
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
         return true;
@@ -114,7 +121,7 @@ public class Equipment implements Serializable {
 
     @Override
     public String toString() {
-        return "co.edu.events.jpa.entities.Equipment[ equipmentPK=" + equipmentPK + " ]";
+        return "co.edu.events.jpa.entities.Equipment[ id=" + id + " ]";
     }
     
 }

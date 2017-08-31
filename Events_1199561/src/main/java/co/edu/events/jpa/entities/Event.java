@@ -32,7 +32,14 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name = "Events")
-public class Eventos implements Serializable {
+@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "Event.findAll", query = "SELECT e FROM Event e")
+    , @NamedQuery(name = "Event.findById", query = "SELECT e FROM Event e WHERE e.id = :id")
+    , @NamedQuery(name = "Event.findByTypeEvent", query = "SELECT e FROM Event e WHERE e.typeEvent = :typeEvent")
+    , @NamedQuery(name = "Event.findByDateStartEvent", query = "SELECT e FROM Event e WHERE e.dateStartEvent = :dateStartEvent")
+    , @NamedQuery(name = "Event.findByDateEndEvent", query = "SELECT e FROM Event e WHERE e.dateEndEvent = :dateEndEvent")})
+public class Event implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -55,17 +62,19 @@ public class Eventos implements Serializable {
     @Column(name = "date_end_event")
     @Temporal(TemporalType.DATE)
     private Date dateEndEvent;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idEvents")
+    private List<Asistence> asistenceList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "event")
-    private List<UsershasEvents> usershasEventsList;
+    private List<UsershasEvent> usershasEventList;
 
-    public Eventos() {
+    public Event() {
     }
 
-    public Eventos(Integer id) {
+    public Event(Integer id) {
         this.id = id;
     }
 
-    public Eventos(Integer id, String typeEvent, Date dateStartEvent, Date dateEndEvent) {
+    public Event(Integer id, String typeEvent, Date dateStartEvent, Date dateEndEvent) {
         this.id = id;
         this.typeEvent = typeEvent;
         this.dateStartEvent = dateStartEvent;
@@ -105,12 +114,21 @@ public class Eventos implements Serializable {
     }
 
     @XmlTransient
-    public List<UsershasEvents> getUsershasEventsList() {
-        return usershasEventsList;
+    public List<Asistence> getAsistenceList() {
+        return asistenceList;
     }
 
-    public void setUsershasEventsList(List<UsershasEvents> usershasEventsList) {
-        this.usershasEventsList = usershasEventsList;
+    public void setAsistenceList(List<Asistence> asistenceList) {
+        this.asistenceList = asistenceList;
+    }
+
+    @XmlTransient
+    public List<UsershasEvent> getUsershasEventList() {
+        return usershasEventList;
+    }
+
+    public void setUsershasEventList(List<UsershasEvent> usershasEventList) {
+        this.usershasEventList = usershasEventList;
     }
 
     @Override
@@ -123,10 +141,10 @@ public class Eventos implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Eventos)) {
+        if (!(object instanceof Event)) {
             return false;
         }
-        Eventos other = (Eventos) object;
+        Event other = (Event) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }

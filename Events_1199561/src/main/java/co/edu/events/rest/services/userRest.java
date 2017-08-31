@@ -12,6 +12,7 @@ import co.edu.events.rest.utils.SendEmail;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.util.List;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -20,6 +21,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -29,18 +31,31 @@ import javax.ws.rs.core.Response;
 public class userRest {
 
     @EJB
-    private UserFacade usuarioEJB;
+    private UserFacade userEJB;
 
     /**
      * Obtiene todos los usuarioes
      *
+     * @param idUser
+     * @param numDocument
+     * @param email
+     * @param idTypeDocument
      * @return lista de usuarios
-     */
-    @GET
-    public List<User> findAll() {
-        return usuarioEJB.findAll();
-    }
+           return userEJB.findAll();
+    }  */
+    
 
+   
+    @GET
+    @RolesAllowed({"ADMIN"})
+    public List<User> findAll(@QueryParam("idUsers") Integer idUser,
+            @QueryParam("numDocument") String numDocument,
+            @QueryParam("email") String email,
+            @QueryParam("idTypeDocument") Integer idTypeDocument) {
+
+    return userEJB.findUsers(idUser, numDocument, email, idTypeDocument);
+    }
+    
     /**
      * Busca usuario por su id
      *
@@ -50,7 +65,7 @@ public class userRest {
     @GET
     @Path("{id}")
     public User findById(@PathParam("id") Integer id) {
-        return usuarioEJB.find(id);
+        return userEJB.find(id);
     }
 
     /**
@@ -65,15 +80,15 @@ public class userRest {
         Gson gson = gsonBuilder.create();
         try {
 
-            if (usuarioEJB.findByEmail(usuario.getEmail()) == null) {
-                if (usuarioEJB.findByNumDocument(usuario
+            if (userEJB.findByEmail(usuario.getEmail()) == null) {
+                if (userEJB.findByNumDocument(usuario
                         .getNumDocument()) == null) {
                     
                     usuario.setPassword(
                             DigestUtil
                             .cifrarPassword(usuario.getPassword()));
                    
-                    usuarioEJB.create(usuario);
+                    userEJB.create(usuario);
                     
                     //START ENVIO EMAIL
                     SendEmail enviarEmail = new SendEmail();
@@ -115,6 +130,6 @@ public class userRest {
     @PUT
     @Path("{id}")
     public void edit(@PathParam("id") Integer id, User usuario) {
-        usuarioEJB.edit(usuario);
+        userEJB.edit(usuario);
     }
 }

@@ -40,7 +40,7 @@ public class TypeDocument implements Serializable {
     @NotNull
     @Size(min = 1, max = 11)
     @Column(name = "id")
-    private String id;
+    private Integer id;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
@@ -52,20 +52,20 @@ public class TypeDocument implements Serializable {
     public TypeDocument() {
     }
 
-    public TypeDocument(String id) {
+    public TypeDocument(Integer id) {
         this.id = id;
     }
 
-    public TypeDocument(String id, String description) {
+    public TypeDocument(Integer id, String description) {
         this.id = id;
         this.description = description;
     }
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

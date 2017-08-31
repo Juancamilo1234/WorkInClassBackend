@@ -16,30 +16,31 @@ import javax.validation.constraints.NotNull;
  * @author adsi1261718
  */
 @Embeddable
-public class EquipmentPK implements Serializable {
+public class UsershasEventPK implements Serializable {
 
     @Basic(optional = false)
-    @Column(name = "id")
-    private int id;
+    @NotNull
+    @Column(name = "id_Events")
+    private int idEvents;
     @Basic(optional = false)
     @NotNull
     @Column(name = "id_Users")
     private int idUsers;
 
-    public EquipmentPK() {
+    public UsershasEventPK() {
     }
 
-    public EquipmentPK(int id, int idUsers) {
-        this.id = id;
+    public UsershasEventPK(int idEvents, int idUsers) {
+        this.idEvents = idEvents;
         this.idUsers = idUsers;
     }
 
-    public int getId() {
-        return id;
+    public int getIdEvents() {
+        return idEvents;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setIdEvents(int idEvents) {
+        this.idEvents = idEvents;
     }
 
     public int getIdUsers() {
@@ -53,7 +54,7 @@ public class EquipmentPK implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (int) id;
+        hash += (int) idEvents;
         hash += (int) idUsers;
         return hash;
     }
@@ -61,11 +62,11 @@ public class EquipmentPK implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof EquipmentPK)) {
+        if (!(object instanceof UsershasEventPK)) {
             return false;
         }
-        EquipmentPK other = (EquipmentPK) object;
-        if (this.id != other.id) {
+        UsershasEventPK other = (UsershasEventPK) object;
+        if (this.idEvents != other.idEvents) {
             return false;
         }
         if (this.idUsers != other.idUsers) {
@@ -76,7 +77,7 @@ public class EquipmentPK implements Serializable {
 
     @Override
     public String toString() {
-        return "co.edu.events.jpa.entities.EquipmentPK[ id=" + id + ", idUsers=" + idUsers + " ]";
+        return "co.edu.events.jpa.entities.UsershasEventPK[ idEvents=" + idEvents + ", idUsers=" + idUsers + " ]";
     }
     
 }
