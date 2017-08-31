@@ -6,9 +6,17 @@
 package co.edu.events.jpa.sessions;
 
 import co.edu.events.jpa.entities.User;
+import co.edu.events.jpa.entities.User_;
+import static co.edu.events.jpa.entities.User_.numDocument;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 /**
  *
@@ -29,4 +37,38 @@ public class UserFacade extends AbstractFacade<User> {
         super(User.class);
     }
     
+     public User findByEmail(String email){
+        CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
+        CriteriaQuery<User> cq = cb.createQuery(User.class);
+        Root<User> tercero = cq.from(User.class);
+        
+        cq.where(cb.equal(tercero.get(User_.email), email));
+        TypedQuery<User> tq = getEntityManager().createQuery(cq);
+        
+        try {
+            return (User) tq.getSingleResult();
+        } catch (NonUniqueResultException ex) {
+            throw ex;
+        } catch(NoResultException e){
+            return null;
+        }
+    }
+
+    public User findByNumDocument(String email) {
+           CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
+        CriteriaQuery<User> cq = cb.createQuery(User.class);
+        Root<User> tercero = cq.from(User.class);
+        
+        cq.where(cb.equal(tercero.get(User_.numDocument), numDocument));
+        TypedQuery<User> tq = getEntityManager().createQuery(cq);
+        
+        try {
+            return (User) tq.getSingleResult();
+        } catch (NonUniqueResultException ex) {
+            throw ex;
+        } catch(NoResultException e){
+            return null;
+        }
+    
+    }
 }

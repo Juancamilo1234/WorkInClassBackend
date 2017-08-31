@@ -72,7 +72,7 @@ public class User implements Serializable {
     @NotNull
     @Size(min = 1, max = 45)
     @Column(name = "email")
-    private String email;
+    public String email;
     @JoinTable(name = "Users _has_Roles", joinColumns = {
         @JoinColumn(name = "id_Users", referencedColumnName = "id")}, inverseJoinColumns = {
         @JoinColumn(name = "id_Roles", referencedColumnName = "id")})

@@ -5,7 +5,7 @@
  */
 package co.edu.events.jpa.sessions;
 
-import co.edu.events.jpa.entities.Event;
+import co.edu.events.jpa.entities.Eventos;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -15,7 +15,7 @@ import javax.persistence.PersistenceContext;
  * @author adsi1261718
  */
 @Stateless
-public class EventFacade extends AbstractFacade<Event> {
+public class EventosFacade extends AbstractFacade<Eventos> {
 
     @PersistenceContext(unitName = "co.edu.events_Events_1199561_war_1.0PU")
     private EntityManager em;
@@ -25,8 +25,8 @@ public class EventFacade extends AbstractFacade<Event> {
         return em;
     }
 
-    public EventFacade() {
-        super(Event.class);
+    public EventosFacade() {
+        super(Eventos.class);
     }
     
 }

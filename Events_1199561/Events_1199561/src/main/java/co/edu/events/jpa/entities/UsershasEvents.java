@@ -36,7 +36,7 @@ public class UsershasEvents implements Serializable {
     private boolean asistEvent;
     @JoinColumn(name = "id_Events", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
-    private Event event;
+    private Eventos event;
     @JoinColumn(name = "id_Users", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private User user;
@@ -73,11 +73,11 @@ public class UsershasEvents implements Serializable {
         this.asistEvent = asistEvent;
     }
 
-    public Event getEvent() {
+    public Eventos getEvent() {
         return event;
     }
 
-    public void setEvent(Event event) {
+    public void setEvent(Eventos event) {
         this.event = event;
     }
 
