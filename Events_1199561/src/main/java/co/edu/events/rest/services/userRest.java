@@ -47,7 +47,7 @@ public class userRest {
 
    
     @GET
-    @RolesAllowed({"ADMIN"})
+    //@RolesAllowed({"ADMIN"})
     public List<User> findAll(@QueryParam("idUsers") Integer idUser,
             @QueryParam("numDocument") String numDocument,
             @QueryParam("email") String email,

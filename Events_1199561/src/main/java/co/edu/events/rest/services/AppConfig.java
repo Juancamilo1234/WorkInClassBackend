@@ -7,6 +7,7 @@ package co.edu.events.rest.services;
 
 import javax.ws.rs.ApplicationPath;
 import org.glassfish.jersey.server.ResourceConfig;
+import org.glassfish.jersey.server.filter.RolesAllowedDynamicFeature;
 
 /**
  *
@@ -17,5 +18,7 @@ public class AppConfig extends ResourceConfig{
 
     public AppConfig() {
         packages("co.edu.events.rest.auth;co.edu.events.rest.services");
+        register(RolesAllowedDynamicFeature.class);
+
     }
 }

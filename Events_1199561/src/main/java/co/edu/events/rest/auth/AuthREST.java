@@ -38,7 +38,7 @@ public class AuthREST {
         final User foundUser;
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.create();
-        foundUser = usuarioEJB.findByNumDocument(user.getNumDocument());
+        foundUser = usuarioEJB.findByEmail(user.getEmail());
         user.setPassword(DigestUtil.cifrarPassword(user.getPassword()));
         if (foundUser == null) {
             return Response.status(Status.UNAUTHORIZED).entity(gson.toJson(NOT_FOUND_MSG)).build();
