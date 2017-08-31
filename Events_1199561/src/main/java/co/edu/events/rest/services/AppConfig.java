@@ -16,6 +16,6 @@ import org.glassfish.jersey.server.ResourceConfig;
 public class AppConfig extends ResourceConfig{
 
     public AppConfig() {
-        packages("co.edu.sena.adsi.rest.auth;co.edu.sena.adsi.rest.services");
+        packages("co.edu.events.rest.auth;co.edu.events.rest.services");
     }
 }

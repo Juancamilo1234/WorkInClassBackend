@@ -7,7 +7,6 @@ package co.edu.events.jpa.sessions;
 
 import co.edu.events.jpa.entities.User;
 import co.edu.events.jpa.entities.User_;
-import static co.edu.events.jpa.entities.User_.numDocument;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -54,7 +53,7 @@ public class UserFacade extends AbstractFacade<User> {
         }
     }
 
-    public User findByNumDocument(String email) {
+    public User findByNumDocument(String numDocument) {
            CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
         CriteriaQuery<User> cq = cb.createQuery(User.class);
         Root<User> tercero = cq.from(User.class);
