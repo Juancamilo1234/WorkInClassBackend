@@ -32,7 +32,7 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name = "Events")
-public class Eventos implements Serializable {
+public class Evento implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -58,14 +58,14 @@ public class Eventos implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "event")
     private List<UsershasEvents> usershasEventsList;
 
-    public Eventos() {
+    public Evento() {
     }
 
-    public Eventos(Integer id) {
+    public Evento(Integer id) {
         this.id = id;
     }
 
-    public Eventos(Integer id, String typeEvent, Date dateStartEvent, Date dateEndEvent) {
+    public Evento(Integer id, String typeEvent, Date dateStartEvent, Date dateEndEvent) {
         this.id = id;
         this.typeEvent = typeEvent;
         this.dateStartEvent = dateStartEvent;
@@ -123,10 +123,10 @@ public class Eventos implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Eventos)) {
+        if (!(object instanceof Evento)) {
             return false;
         }
-        Eventos other = (Eventos) object;
+        Evento other = (Evento) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
